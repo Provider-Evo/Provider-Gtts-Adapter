@@ -3,8 +3,8 @@ adaptercore 模块。
 
 本文件为 Provider-Evo 项目标准模块，使用以下约定：
 
-- 模块路径：provider-plugin.Provider-Gtts-Adapter.provider_gtts.core.adaptercore
-- 文件名：adaptercore.py
+- 模块路径：provider-plugin.Provider-Gtts-Adapter.provider_gtts.core.acore
+- 文件名：acore.py
 - 父包：provider-plugin/Provider-Gtts-Adapter/provider_gtts/core
 
 职责：
@@ -42,11 +42,11 @@ from typing import Any, AsyncGenerator, Dict, List, Union
 
 import aiohttp
 
-from src.core.dispatch.candidate import Candidate
+from src.core.dispatch.cand import Candidate
 from src.core.utils.errors import NotSupportedError
 from src.foundation.logger import get_logger
 from provider_sdk.extensions.platform.adapter import PlatformAdapter
-from .constants import CAPS, MODELS
+from .consts import CAPS, MODELS
 from .client import Client
 
 logger = get_logger(__name__)
@@ -199,7 +199,7 @@ from .headers import (
     build_headers,
 )
 
-from .payloads import (
+from .payload import (
     build_payload,
 )
 

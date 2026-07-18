@@ -1,7 +1,7 @@
-"""headers 模块 — Provider 适配器层。
+"""payloads 模块 — Provider 适配器层。
 
 职责：
-    集中放置 provider HTTP 请求头构造逻辑。
+    集中放置 provider 请求 payload 模板与序列化函数。
 
 本文件为 Provider-Evo 项目标准模块；保持单文件 200-400 行。
 修改指引参见文件末尾的"本模块对外契约"章节（共 20 条）。
@@ -9,39 +9,46 @@
 
 
 
-from typing import Dict
+from typing import Any, Dict, List
+
+from .consts import DEFAULT_MODEL
 
 
-def build_headers(token: str = "") -> Dict[str, str]:
-    """构建 gTTS 请求头。
+def build_payload(
+    messages: List[Dict[str, Any]],
+    model: str = "",
+    stream: bool = True,
+    **kw: Any,
+) -> Dict[str, Any]:
+    """构建聊天请求体占位。
 
     Args:
-        token: 占位 token（gTTS 不需要）。
+        messages: 消息列表。
+        model: 模型名。
+        stream: 是否流式。
+        **kw: 额外参数。
 
     Returns:
-        请求头字典。
+        请求体字典。
     """
-    headers: Dict[str, str] = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        ),
-        "Referer": "https://translate.google.com/",
+    payload: Dict[str, Any] = {
+        "model": model or DEFAULT_MODEL,
+        "messages": messages,
+        "stream": stream,
     }
-    if token:
-        headers["Authorization"] = token
-    return headers
+    payload.update(kw)
+    return payload
 
 # =======================================================================
 # 重导出 — 同包内协同模块的公共符号（保持外部 ``from .. import`` 路径稳定）
 # =======================================================================
 
-from .payload import (
-    build_payload,
+from .headers import (
+    build_headers,
 )
 
 __all__ = [
-    "build_payload",
+    "build_headers",
 ]
 
 # =======================================================================
@@ -93,11 +100,11 @@ from .client import (
     Client,
 )
 
-from .payload import (
-    build_payload,
+from .headers import (
+    build_headers,
 )
 __all__ = [
     "GttsAdapter",
     "Client",
-    "build_payload",
+    "build_headers",
 ]

@@ -42,9 +42,9 @@ from typing import Any, Dict, List, Optional
 
 import aiohttp
 
-from src.core.dispatch.candidate import Candidate, make_id
+from src.core.dispatch.cand import Candidate, make_id
 from src.foundation.logger import get_logger
-from .constants import CAPS, MODELS
+from .consts import CAPS, MODELS
 from .stream.tts import TtsService
 
 logger = get_logger(__name__)
@@ -174,7 +174,7 @@ from .headers import (
     build_headers,
 )
 
-from .payloads import (
+from .payload import (
     build_payload,
 )
 

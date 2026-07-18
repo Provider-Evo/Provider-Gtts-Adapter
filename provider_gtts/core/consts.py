@@ -1,7 +1,7 @@
-"""headers 模块 — Provider 适配器层。
+"""constants 模块 — Provider 适配器层。
 
 职责：
-    集中放置 provider HTTP 请求头构造逻辑。
+    集中放置 provider 常量定义（模型名、URL 模板、错误码等）。
 
 本文件为 Provider-Evo 项目标准模块；保持单文件 200-400 行。
 修改指引参见文件末尾的"本模块对外契约"章节（共 20 条）。
@@ -9,38 +9,39 @@
 
 
 
-from typing import Dict
+from typing import Any, Dict, List
 
+MODELS: List[str] = ["gtts-default"]
+CAPS: Dict[str, bool] = {
+    "audio_gen": True,
+}
 
-def build_headers(token: str = "") -> Dict[str, str]:
-    """构建 gTTS 请求头。
+BASE_URL: str = "https://translate.google.com"
+CHAT_PATH: str = "/_/TranslateWebserverUi/data/batchexecute"
+TTS_PATH: str = "/translate_tts"
 
-    Args:
-        token: 占位 token（gTTS 不需要）。
+DEFAULT_MODEL: str = "gtts-default"
+GTTS_DEFAULT_LANG: str = "zh-CN"
+GTTS_DEFAULT_TLD: str = "com"
+GTTS_SLOW: bool = False
+GTTS_MAX_CHARS: int = 100
 
-    Returns:
-        请求头字典。
-    """
-    headers: Dict[str, str] = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        ),
-        "Referer": "https://translate.google.com/",
-    }
-    if token:
-        headers["Authorization"] = token
-    return headers
+MAX_RETRIES: int = 3
 
 # =======================================================================
 # 重导出 — 同包内协同模块的公共符号（保持外部 ``from .. import`` 路径稳定）
 # =======================================================================
+
+from .headers import (
+    build_headers,
+)
 
 from .payload import (
     build_payload,
 )
 
 __all__ = [
+    "build_headers",
     "build_payload",
 ]
 
@@ -93,11 +94,16 @@ from .client import (
     Client,
 )
 
+from .headers import (
+    build_headers,
+)
+
 from .payload import (
     build_payload,
 )
 __all__ = [
     "GttsAdapter",
     "Client",
+    "build_headers",
     "build_payload",
 ]

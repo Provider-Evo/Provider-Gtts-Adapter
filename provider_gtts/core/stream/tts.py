@@ -41,9 +41,9 @@ from typing import Any, Dict, List, Optional
 
 import aiohttp
 
-from src.core.dispatch.candidate import Candidate
+from src.core.dispatch.cand import Candidate
 from src.foundation.logger import get_logger
-from ..constants import (
+from ..consts import (
     GTTS_DEFAULT_LANG,
     GTTS_MAX_CHARS,
     GTTS_SLOW,
