@@ -1,4 +1,12 @@
 {
   "type": "object",
-  "properties": {}
+  "properties": {
+    "use_proxy": {
+      "type": "boolean",
+      "title": "Use Proxy",
+      "default": true,
+      "description": "gTTS 为免费 TTS 服务，一般无需 API Key；启用时代理出站请求"
+    }
+  },
+  "required": []
 }
